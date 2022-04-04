@@ -1,0 +1,3 @@
+describe("rating", function(){ 
+
+});
