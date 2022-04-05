@@ -1,0 +1,72 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Hello For Each" icon-name="standard:contact">
+        <div class="slds-p-horizontal_small">
+            {user.age}
+            <lightning-button variant="brand" label="Click Me" title="Click Me" onclick={handleClick}></lightning-button>
+            <template for:each={contacts} for:item="contact" for:index="index">
+                <li key={contact.Id}>
+                    {index} - {contact.Name} - {contact.Title} - {contact.Id}
+                </li>
+                <div key={contact.Id}>
+                </div>
+            </template>
+        </div>
+        <p slot="footer">Card Footer</p>
+    </lightning-card>
+    <lightning-card  variant="Narrow"  title="Hello Iterator" icon-name="standard:contact">
+        <div class="slds-p-horizontal_small">
+            <template iterator:it={contacts} if:true={contacts} >
+                <div key={it.value.index} if:true={it.first} class="list-first"></div>
+                <li key={it.value.Id}>
+                    {it.value.Name} - {it.value.Title} - {it.value.Id}
+                </li>
+                <div  key={it.value.Id} if:true={it.last} class="list-last"></div>
+            </template>
+        </div>
+        <p slot="footer">Card Footer</p>
+    </lightning-card>
+
+    <!-- User/Contact/Lead/ Company/ Opportunity ( Persons ) -->
+    <!-- Personal Information -->
+    <!-- Template ( displaying the personal information ) -->
+    <!-- Address Information -->
+    <!-- Template ( displaying the address information ) -->
+    <!-- <lightning-card  variant="Narrow"  title="Simple Variable (session 2 )" icon-name="standard:account">
+        <lightning-button-icon  icon-name="utility:down" variant="border-filled" alternative-text="Show More" slot="actions"></lightning-button-icon>
+        <div class="slds-p-horizontal_small">
+            {message} <br/>
+            {age} <br/>
+            {name} <br/>
+            {isActive} <br/>
+            {isDisabled} <br/>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+    <lightning-card  variant="Narrow"  title="Object Variable (session 2 )" icon-name="standard:account">
+        <lightning-button-icon  icon-name="utility:down" variant="border-filled" alternative-text="Show More" slot="actions"></lightning-button-icon>
+        <div class="slds-p-horizontal_small">
+            {user.name} <br/>
+            {user.age} <br/>
+            <template if:true={user.address2}> <!- - no falsy value, 0, undefined  - ->
+                <p if:true={user.address2.street}>{user.address2.street} <br/></p>
+                {user.address2} <br/>
+            </template>
+            <template if:false={user.address2}>
+                There is no address information! <br/>
+            </template>
+            {contacts} <br/>
+            {welcomeMessage} <br/>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+    <lightning-card  variant="Narrow"  title="Object Variable (session 2 )" icon-name="standard:account">
+        <lightning-button-icon  icon-name="utility:down" variant="border-filled" alternative-text="Show More" slot="actions"></lightning-button-icon>
+        <div class="slds-p-horizontal_small" if:true={displayTom}>
+            <img src={tomImage} alt="Tom Hanks" />
+        </div>
+        <div class="slds-p-horizontal_small" if:false={displayTom}>
+            <img src={jerryImage} alt="jerry Hanks" />
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card> -->
+</template>

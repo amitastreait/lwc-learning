@@ -1,3 +1,3 @@
 <aura:application extends="force:slds">
-    <c:helloWorld />
+    <c:lwcBacth1Session2 />
 </aura:application>
