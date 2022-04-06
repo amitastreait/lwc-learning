@@ -1,8 +1,12 @@
 <template>
     <lightning-card  variant="Narrow"  title="Hello For Each" icon-name="standard:contact">
-        <div class="slds-p-horizontal_small">
-            {user.age}
-            <lightning-button variant="brand" label="Click Me" title="Click Me" onclick={handleClick}></lightning-button>
+        <div class="slds-p-around_large">
+            <p>
+                User Age: {user.age}
+            </p>
+            <p>
+                <lightning-button variant="brand" label="Click Me" title="Click Me" onclick={handleClick}></lightning-button>
+            </p>
             <template for:each={contacts} for:item="contact" for:index="index">
                 <li key={contact.Id}>
                     {index} - {contact.Name} - {contact.Title} - {contact.Id}
@@ -14,7 +18,7 @@
         <p slot="footer">Card Footer</p>
     </lightning-card>
     <lightning-card  variant="Narrow"  title="Hello Iterator" icon-name="standard:contact">
-        <div class="slds-p-horizontal_small">
+        <div class="slds-p-around_large">
             <template iterator:it={contacts} if:true={contacts} >
                 <div key={it.value.index} if:true={it.first} class="list-first"></div>
                 <li key={it.value.Id}>

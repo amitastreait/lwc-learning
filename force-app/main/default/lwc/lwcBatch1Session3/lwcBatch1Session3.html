@@ -1,0 +1,68 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Session 3" icon-name="custom:custom34">
+        <lightning-button variant="brand" slot="actions" label="Save" title="Save" onclick={handleSubmit}></lightning-button>
+        <div class="slds-p-horizontal_small">
+            <lightning-input type="text" variant="standard"  label="Name" onchange={handleNameChange}></lightning-input>
+            <lightning-input type="checkbox" variant="standard" label="Paid" onchange={handlePaid}></lightning-input>
+            <lightning-input type="number" variant="standard" label="Quantity" placeholder="type here..."></lightning-input>
+            <lightning-input type="number" variant="standard" name="name" label="Amount" formatter="currency" step="any"
+            ></lightning-input>
+            <lightning-combobox
+                label="Status"
+                placeholder="Select Status"
+                options={options}
+            >
+            </lightning-combobox>
+            <lightning-input type="datetime" variant="standard" label="Appointment date" ></lightning-input>
+            <lightning-input-address
+                address-label="Address"
+                street-label="Street"
+                city-label="City"
+                country-label="Country"
+                province-label="Province"
+                postal-code-label="PostalCode"
+                street="121 Spear St."
+                city="San Francisco"
+                country="US"
+                province="CA"
+                postal-code="94105"
+                required
+                field-level-help="Help Text for inputAddress field" >
+            </lightning-input-address>
+            <lightning-input-name
+                label="Default Input Name Field"
+                first-name="John"
+                middle-name="Middleton"
+                last-name="Doe"
+                informal-name="Jo"
+                suffix="The 3rd"
+                salutation="Mr.">
+            </lightning-input-name>
+        </div>
+        <!-- <div class="slds-p-horizontal_small">
+            <lightning-button data-id="getAccount" data-record-name-acc="abc" data-record-id="001HGJDHGD3464" variant="base" name="Simple Base Button" label="Get Account" title="Base Button" onclick={handleClick}></lightning-button> <br/>
+            <lightning-button variant="brand" label="Get Opportunity" title="Brand Button" onclick={handleClick}></lightning-button> <br/>
+            <lightning-button variant="success" label="Get Case" title="Success Button" onclick={handleClick}></lightning-button> <br/>
+            <lightning-button variant="destructive" label="Delete" title="Delete" onclick={handleClick} ></lightning-button> <br/>
+        </div>
+        <div class="slds-p-around_large">
+            {message} <br/>
+            <template if:true={toDos} for:each={toDos} for:item="item" for:index="index"> <! - - event.taregt - ->
+                <div data-id={item.Id} onclick={handleChange} key={item.Id}> <!- - event.currentTaregt- ->
+                    <br/>
+                    <br/>
+                    <p>
+                        Description: {item.description}
+                    </p>
+                    <p>
+                        Priority:  {item.priority}
+                    </p>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+            </template>
+        </div> -->
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>

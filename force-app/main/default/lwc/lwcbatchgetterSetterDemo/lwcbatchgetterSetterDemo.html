@@ -1,0 +1,10 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Getter Setter Demo" icon-name="standard:account">
+        <lightning-button variant="brand" slot="actions" label="Click Me" title="Click Me" onclick={handlChangeValue}></lightning-button>
+        <div class="slds-p-horizontal_small">
+            <lightning-input type="text" variant="standard" label="Breed Name" onchange={handleBreedChange} ></lightning-input> <br/>
+            {itemName}
+        </div>
+        <p slot="footer">Card Footer</p>
+    </lightning-card>
+</template>
