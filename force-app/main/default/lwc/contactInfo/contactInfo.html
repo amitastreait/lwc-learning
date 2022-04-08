@@ -1,0 +1,26 @@
+<template>
+    <lightning-card>
+        <template if:true={contact}>
+            <div class="slds-align_absolute-center">
+                <div class="slds-var-m-around_medium slds-text-align_center">
+                    <template if:true={contact.Picture__c}>
+                        <img src={contact.Picture__c} class="slds-avatar slds-avatar_circle slds-avatar_large" alt="Profile photo"
+                        />
+                    </template>
+                    <p>{contact.Name}</p>
+                    <p>{contact.Title}</p>
+                    <p>
+                        <lightning-formatted-phone
+                            value={contact.Phone}
+                        ></lightning-formatted-phone>
+                    </p>
+                    <p>
+                        <lightning-formatted-email
+                            value={contact.Email}
+                        ></lightning-formatted-email>
+                    </p>
+                </div>
+            </div>
+        </template>
+    </lightning-card>
+</template>

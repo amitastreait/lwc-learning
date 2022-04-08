@@ -1,0 +1,23 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Contact List" icon-name="standard:contact">
+        <div class="slds-p-around_large">
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="6"
+                    large-device-size="3" >
+                    <template if:true={contacts.records}>
+                        <template for:each={contacts.records} for:item="contact">
+                            <c-contact-tile onselect={handleSelectEvent} contact={contact} key={contact.Id} data-contact-id={contact.Id} ></c-contact-tile>
+                        </template>
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="6"
+                    large-device-size="9">
+                    <div if:true={selectedContact}>
+                        <c-contact-info contact={selectedContact} ></c-contact-info>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>

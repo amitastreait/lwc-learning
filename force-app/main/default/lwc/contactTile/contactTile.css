@@ -1,0 +1,25 @@
+img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+    color: green;
+}
+
+/* mouse over link */
+a:hover {
+    color: blue;
+    cursor: pointer;
+}
+
+/* selected link */
+a:active {
+    color: yellow;
+}

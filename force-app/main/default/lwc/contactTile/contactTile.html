@@ -1,0 +1,18 @@
+<template>
+    <template if:true={contact}>
+        <a href="JavaScript:void(0);" onclick={handleSelect} >
+            <lightning-layout vertical-align="center">
+                <lightning-layout-item padding="around-small">
+                    <img src={contact.Picture__c} alt="Profile photo" />
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small">
+                    <p>{contact.FirstName} {contact.LastName}</p>
+                    <p>{contact.Title}</p>
+                    <p>
+                        <lightning-formatted-email value={contact.Email} ></lightning-formatted-email>
+                    </p>
+                </lightning-layout-item>
+            </lightning-layout>
+        </a>
+    </template>
+</template>
