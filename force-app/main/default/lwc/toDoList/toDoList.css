@@ -1,0 +1,17 @@
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+}
+
+.complete{
+    background-color: gray !important;
+    color: black !important;
+}
+.low{
+    color: green !important;
+}
+.high{
+    color: red !important;
+}
+.medium{
+    color: orange !important;
+}

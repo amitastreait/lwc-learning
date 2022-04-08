@@ -1,18 +1,23 @@
 <template>
     <lightning-card  variant="Narrow"  title="Slots Example with Parent Child" icon-name="standard:account">
         <div class="slds-p-horizontal_small">
-            <slot name="header">
-                Header Slot
-            </slot>
+            <h1>
+                Parent Slot
+            </h1>
         </div>
         <div class="slds-p-horizontal_small">
             <!-- Kebab Case -->
             <!-- Capital letter in the name of folder is going to be replaced with - & lower letter -->
             <!-- myFirstLWC-->
             <!-- <c-my-first-lw-c /> -->
-            <template if:true={contacts} for:each={contacts} for:item="con" for:index="index">
-                <c-child-slot key={con.Id} contact={con} record-name={con.Name}></c-child-slot>
-            </template>
+            <div>
+                <!-- Shadow-DOM -->
+                <template if:true={contacts} for:each={contacts} for:item="con" for:index="index">
+                    <c-child-slot key={con.Id} contact={con} record-name={con.Name}>
+                        <!--#Shadow-Root-->
+                    </c-child-slot>
+                </template>
+            </div>
         </div>
         <div slot="footer">Card Footer</div>
     </lightning-card>

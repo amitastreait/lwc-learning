@@ -1,0 +1,32 @@
+<template>
+    <lightning-card  variant="Narrow"  title="To Do List" icon-name="custom:custom35">
+        <div class="slds-p-around_large">
+            <lightning-input type="text" variant="standard" name="name" label="Description" onchange={handleDescriptionChange} ></lightning-input>
+            <lightning-combobox
+                name="progress"
+                label="Priority"
+                placeholder="Select Priority"
+                options={options}
+                onchange={handlePicklistChange} >
+            </lightning-combobox>
+            <p>
+                <lightning-button variant="brand" label="Add to List" title="Add to List" onclick={handleSubmit}></lightning-button>
+            </p>
+        </div>
+        <div class="slds-p-around_large">
+            <template if:true={toDos} for:each={toDos} for:item="item" for:index="index">
+                <div key={item.Id} class={item.COMPLETE_CLASS}>
+                    <div class="slds-p-aroung_small">
+                        <p class="slds-p-aroung_small">
+                            Description :  {item.description}
+                        </p>
+                        <p class={item.cssClass}>
+                            Priority {item.priority}
+                        </p>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <p slot="footer">Card Footer</p>
+    </lightning-card>
+</template>

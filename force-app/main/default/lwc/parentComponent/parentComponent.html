@@ -1,0 +1,24 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Events in LWC" icon-name="standard:account">
+        <div class="slds-p-horizontal_small">
+            <lightning-button variant="success" label="Send Data to Child" title="Send Data to Child" onclick={handleChildSend}></lightning-button>
+        </div>
+        <c-child-component></c-child-component>
+        <a href="JavaScript:void(0);"></a>
+        <lightning-button variant="brand" label="Read More" title="Read More"></lightning-button>
+        <div class="slds-p-horizontal_small" onchildevent={handleChildEvent}>
+            <!-- Shadow DOM -->
+            <!--
+                contacts => 3 record
+                contacts => 1K records
+                contacts => 10K records
+            -->
+            <!-- <template if:true={contacts} for:each={contacts} for:item="con" for:index="index">
+                <c-child-component key={con.Id} contact={con} >
+                    <!- - #Shadow-Root- ->
+                </c-child-component>
+            </template> -->
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>
