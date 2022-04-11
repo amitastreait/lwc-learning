@@ -1,0 +1,28 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Account Edit" icon-name="standard:account">
+        <div class="slds-p-around_large">
+            <lightning-record-form
+                object-api-name={objectApiName}
+                record-id={recordId}
+                fields={fields}
+                mode="edit"
+                columns="2"
+            >
+            </lightning-record-form>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+    <lightning-card  variant="Narrow"  title="Account Create" icon-name="standard:account">
+        <div class="slds-p-around_large">
+            <lightning-record-form
+                object-api-name={objectApiName}
+                fields={fields}
+                mode="edit"
+                columns="2"
+                onsuccess={handleSuccess}
+            >
+            </lightning-record-form>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>

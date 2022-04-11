@@ -1,0 +1,68 @@
+<template>
+    <lightning-card  variant="Narrow"  title="LDS Demo" icon-name="standard:lead">
+        <div class="slds-p-horizontal_small">
+            <lightning-record-form if:true={recordId}
+                object-api-name={objectApiName}
+                record-id={recordId}
+                fields={fields}
+                mode="readonly"
+                columns="2"
+            >
+            </lightning-record-form>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <lightning-record-form if:false={recordId}
+                object-api-name={objectApiName}
+                fields={fields}
+                mode="edit"
+                columns="2"
+                onsubmit={handleSubmit}
+                oncancel={handleCancel}
+                onsuccess={handleSuccess}
+                onerror={handleError}
+            >
+            </lightning-record-form>
+        </div>
+        <!-- <div class="slds-p-horizontal_small">
+            <lightning-record-edit-form
+                object-api-name={objectApiName}
+                record-id={recordId}>
+                <lightning-input-field field-name="FirstName"> </lightning-input-field>
+                <lightning-input-field field-name="LastName"> </lightning-input-field>
+                <lightning-input-field field-name="Phone"> </lightning-input-field>
+                <lightning-input-field field-name="Email"> </lightning-input-field>
+                <lightning-input-field field-name="OwnerId"> </lightning-input-field>
+                <div class="slds-var-m-top_medium">
+                    <lightning-button variant="brand" type="submit" label="Save">
+                    </lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <lightning-record-view-form
+                object-api-name={objectApiName}
+                record-id={recordId}>
+                <lightning-output-field field-name="FirstName"> </lightning-output-field>
+                <lightning-output-field field-name="LastName"> </lightning-output-field>
+                <lightning-output-field field-name="Phone"> </lightning-output-field>
+                <lightning-output-field field-name="Email"> </lightning-output-field>
+                <lightning-output-field field-name="OwnerId"> </lightning-output-field>
+            </lightning-record-view-form>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <lightning-record-edit-form
+                object-api-name={objectApiName} >
+                <lightning-input-field field-name="FirstName"> </lightning-input-field>
+                <lightning-input-field field-name="LastName"> </lightning-input-field>
+                <lightning-input-field field-name="Phone"> </lightning-input-field>
+                <lightning-input-field field-name="Email"> </lightning-input-field>
+                <lightning-input-field field-name="OwnerId"> </lightning-input-field>
+                <div class="slds-var-m-top_medium">
+                    <lightning-button variant="brand" type="submit" label="Save">
+                    </lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </div> -->
+        <p slot="footer">Card Footer</p>
+    </lightning-card>
+</template>
