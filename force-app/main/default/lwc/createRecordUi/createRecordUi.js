@@ -89,6 +89,24 @@ export default class CreateRecordUi extends LightningElement {
         .then( function(response){
             alert( 'Record Created ' + response.id );
             console.log('createRecord result: ' + JSON.stringify(response) );
+            const contactFields = {};
+            contactFields['FirstName'] = 'John';
+            contactFields['LastName'] = 'Doe';
+            contactFields['Email'] = 'sfdcpanther@gmail.com';
+
+            const contactRecordInput = {
+                apiName: 'Contact',
+                fields: contactFields
+            }
+            createRecord(contactRecordInput)
+            .then( function(response){
+
+
+                
+            })
+            .catch( function(error){
+
+            });
         })
         .catch( (error) =>{
             console.log('createRecord error: ' + JSON.stringify(error) );
