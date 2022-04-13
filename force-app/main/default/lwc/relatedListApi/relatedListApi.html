@@ -1,0 +1,25 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Related List API" icon-name="standard:account">
+        <lightning-card title="wireGetRelatedListCount">
+            <template if:true={responseData}>
+                <div class="slds-m-around_medium">
+                        <p key={responseData.count}>
+                            {responseData.count} : {responseData.hasMore}
+                        </p>
+                </div>
+            </template>
+        </lightning-card>
+        <lightning-card title="wireGetRelatedListRecords">
+            <template if:true={records}>
+                <div class="slds-m-around_medium">
+                    <template for:each={records} for:item="rec">
+                        <p key={rec.fields.Id.value}>
+                            {rec.fields.Name.value}
+                        </p>
+                    </template>
+                </div>
+            </template>
+        </lightning-card>
+        <p slot="footer">Card Footer</p>
+    </lightning-card>
+</template>

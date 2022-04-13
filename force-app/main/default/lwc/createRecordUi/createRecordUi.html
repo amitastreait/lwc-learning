@@ -1,0 +1,17 @@
+<template>
+    <lightning-spinner alternative-text="Loading" size="small" variant="brand" if:true={isLoading} ></lightning-spinner>
+    <lightning-card  variant="Narrow"  title="UI Record API" icon-name="standard:account">
+        <div class="slds-p-around_large">
+            <p>FirstName : {firstName}</p>
+            <p>LastName : {lastName}</p>
+            <p>Account Name: {accountNameContact} </p>
+        </div>
+        <div class="slds-p-around_large">
+            <lightning-input type="text" variant="standard" name="Name" label="Account Name" onchange={handleChange} ></lightning-input>
+            <lightning-button variant="brand" label="Create Account" title="Create Account" onclick={handleCreateRecord}></lightning-button>
+            <lightning-button variant="destructive" label="Delete Record" onclick={handleDeleteRecord}></lightning-button>
+            <lightning-button variant="success" label="Update Contact" onclick={handleUpdateRecord}></lightning-button>
+        </div>
+        <p slot="footer">Card Footer</p>
+    </lightning-card>
+</template>
