@@ -1,6 +1,21 @@
 <template>
     <lightning-card  variant="Narrow"  title="Hello" icon-name="standard:account">
         <p class="slds-p-horizontal_small">
+            <lightning-input type="text" required variant="standard" name="Account Name" label="Account Name"></lightning-input>
+        </p>
+        <p class="slds-p-horizontal_small">
+            <lightning-input type="text" required variant="standard" name="Contact First Name" label="Contact First Name"></lightning-input>
+        </p>
+        <p class="slds-p-horizontal_small">
+            <lightning-input type="text" required variant="standard" name="Contact Last Name" label="Contact Last Name"></lightning-input>
+        </p>
+        <p class="slds-p-horizontal_small">
+            <lightning-input type="phone" required variant="standard" name="Contact Phone" label="Contact Phone"></lightning-input>
+        </p>
+        <p class="slds-p-horizontal_small">
+            <lightning-input type="email" required variant="standard" name="Contact Email" label="Contact Email"></lightning-input>
+        </p>
+        <p class="slds-p-top_large">
             <lightning-button variant="brand" label="Create Records" title="Create Records" onclick={createAccountAndContact}></lightning-button>
         </p>
         <p slot="footer">Card Footer</p>
