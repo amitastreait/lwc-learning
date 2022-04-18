@@ -15,6 +15,9 @@
         <p class="slds-p-horizontal_small">
             <lightning-input type="email" required variant="standard" name="Contact Email" label="Contact Email"></lightning-input>
         </p>
+        <p class="slds-p-horizontal_small">
+            <c-ui-object-info-a-p-i picklist-field-api-name="Industry" object-api-name="Account"></c-ui-object-info-a-p-i>
+        </p>
         <p class="slds-p-top_large">
             <lightning-button variant="brand" label="Create Records" title="Create Records" onclick={createAccountAndContact}></lightning-button>
         </p>

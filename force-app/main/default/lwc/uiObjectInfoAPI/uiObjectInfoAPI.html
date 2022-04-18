@@ -1,5 +1,5 @@
 <template>
-    <lightning-card  variant="Narrow"  title="UI Object Info API" icon-name="custom:custom43">
+    <lightning-card >
         <div class="slds-p-horizontal_small">
             <lightning-combobox
                 name="AccountSource"
@@ -8,6 +8,22 @@
                 options={options}>
             </lightning-combobox>
         </div>
-        <div slot="footer">Card Footer</div>
+        <div class="slds-var-m-vertical_small">
+            <span class="slds-text-color_destructive">
+                {friendlyMessage}
+                <template if:true={errorMessages}>
+                    <a onclick={handleShowDetailsClick}> Show details.</a>
+                </template>
+            </span>
+            <template if:true={errorMessages}>
+                <template if:true={viewDetails}>
+                    <template for:each={errorMessages} for:item="message">
+                        <p class="slds-text-body_regular" key={message}>
+                            {message}
+                        </p>
+                    </template>
+                </template>
+            </template>
+        </div>
     </lightning-card>
 </template>

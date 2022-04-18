@@ -1,0 +1,21 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Contact List" icon-name="standard:contact">
+        <div class="slds-p-horizontal_small">
+            <!-- <template if:true={records} for:each={records} for:item="con" for:index="index">
+                <div key={con.Id}>
+                    {con.Name}
+                </div>
+            </template> -->
+            <lightning-input type="text" variant="standard"  name="FirstName" label="First Name" onchange={handleInputChange}></lightning-input>
+            <lightning-input type="text" variant="standard"  name="LastName" label="Last Name" onchange={handleInputChange}></lightning-input>
+            <lightning-input type="email" variant="standard" name="Email" label="Email" onchange={handleInputChange}></lightning-input>
+            <lightning-input type="phone" variant="standard" name="Phone" label="Phone" onchange={handleInputChange}></lightning-input>
+            <lightning-input type="text" variant="standard"  name="Languages__c" label="Languages" onchange={handleInputChange}></lightning-input>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <lightning-button variant="brand" label="Load More" onclick={loadMore}></lightning-button>
+            <lightning-button variant="brand" label="Create Contact" title="Create Contact" onclick={handleClick}></lightning-button>
+        </div>
+        <p slot="footer">Card Footer</p>
+    </lightning-card>
+</template>

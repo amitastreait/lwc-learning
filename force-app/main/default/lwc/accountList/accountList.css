@@ -1,0 +1,14 @@
+body{
+    font-family: Georgia, 'Times New Roman', Times, serif !important;
+}
+
+div.accList:hover{
+    cursor: pointer !important;
+    color: blue !important;
+}
+
+.accDetail{
+    display: block;
+    background-color: aliceblue !important;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+}

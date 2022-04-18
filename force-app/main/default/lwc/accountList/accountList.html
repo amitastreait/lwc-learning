@@ -1,0 +1,36 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Account List" icon-name="standard:account">
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="6" large-device-size="4" >
+                <div class="slds-p-around_large">
+                    <template if:true={records} for:each={records} for:item="acc" for:index="index">
+                        <div class="accList" data-record-id={acc.Id} key={acc.Id} onclick={handleSelected}>
+                            <p>{acc.Name}</p>
+                            <p>{acc.Rating}</p>
+                            <p>{acc.Industry}</p>
+                            <p>{acc.Phone}</p>
+                            <p>{acc.Type}</p>
+                            <hr/>
+                        </div>
+                    </template>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="horizontal-medium" small-device-size="3" medium-device-size="6" large-device-size="8">
+                <div class="slds-p-around_large">
+                    <div class="accDetail slds-var-p-around_medium slds-text-align_center slds-align_absolute-center" if:true={selectedAccount}>
+                        <p>{selectedAccount.Name}</p>
+                        <p>{selectedAccount.Rating}</p>
+                        <p>{selectedAccount.Industry}</p>
+                        <p>{selectedAccount.Phone}</p>
+                        <p>{selectedAccount.Type}</p>
+                        <hr/>
+                    </div>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+        <div class="slds-p-around_large">
+            <lightning-button variant="brand" label="Get Accounts" title="Get Accounts" onclick={handleButtonClick}></lightning-button>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>
