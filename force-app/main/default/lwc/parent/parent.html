@@ -1,0 +1,14 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Life Cycle Hook" icon-name="custom:custom34">
+        <div class="slds-p-horizontal_small">
+            <lightning-input onchange={handleChange} type="text" variant="standard" name="Greeting" label="Greeting" value={greeting}></lightning-input>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <lightning-input type="checkbox" variant="standard" name="Show/Hide Child" label="Show/Hide Child" onchange={handleShowHideChild}></lightning-input>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <c-child if:true={showChild}></c-child>
+        </div>
+        <p slot="footer">Card Footer</p>
+    </lightning-card>
+</template>

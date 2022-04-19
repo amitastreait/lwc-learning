@@ -1,0 +1,13 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Hello" icon-name="standard:account">
+        <lightning-button-icon  icon-name="utility:down" variant="border-filled" alternative-text="Show More" slot="actions"></lightning-button-icon>
+        <p class="slds-p-horizontal_small">
+            <c-create-record-ui></c-create-record-ui>
+        </p>
+        <p>
+            <lightning-button variant="brand" label="Toggle Template" title="Toggle Template"
+                onclick={toggleTemplate}></lightning-button>
+        </p>
+        <p slot="footer">Card Footer</p>
+    </lightning-card>
+</template>

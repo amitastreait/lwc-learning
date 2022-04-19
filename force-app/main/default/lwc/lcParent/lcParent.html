@@ -1,0 +1,17 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Life Cycle Hook" icon-name="standard:account">
+        <div class="slds-p-horizontal_small">
+            <c-lc-child if:true={showChild} greeting={greeting}></c-lc-child>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <lightning-input type="text" value={greeting} variant="standard" label="Greeting Message" onchange={handleChange}></lightning-input>
+        </div>
+        <div>
+            <lightning-button variant="base" label="Toggle Template" title="Toggle Template"
+                onclick={toggleTemplate}></lightning-button>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <lightning-button variant="brand" label="Toggle Child" title="Toggle Child" onclick={toggleChild}></lightning-button>
+        </div>
+    </lightning-card>
+</template>
