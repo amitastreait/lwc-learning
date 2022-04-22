@@ -1,9 +1,10 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-useless-concat */
 import { LightningElement } from 'lwc';
-import fullCalendar from '@salesforce/resourceUrl/FullCalendarLC';
+import fCalendar from '@salesforce/resourceUrl/FullCalendarLC';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import accountList from '@salesforce/apex/AccountList.accountList';
+import LOCALE from '@salesforce/i18n/locale';
 export default class LibFullCalendarDemo extends LightningElement {
 
     calendar;
@@ -12,32 +13,29 @@ export default class LibFullCalendarDemo extends LightningElement {
     events = [];
     connectedCallback() {
         Promise.all([
-            loadScript(this, fullCalendar+'/fullcalendar-4.4.3/packages/core/main.js'), // load JS
-            loadScript(this, fullCalendar+'/fullcalendar-4.4.3/packages/core/main.min.js'),
+            loadStyle(this, fCalendar + '/packages/core/main.css'),
+            loadStyle(this, fCalendar + '/packages/core/main.min.css'),
+            loadScript(this, fCalendar + '/packages/core/main.js'),
+            loadScript(this, fCalendar + '/packages/core/main.min.js'),
 
-            loadScript(this, fullCalendar+'/fullcalendar-4.4.3/packages/daygrid/main.js'),
-
-            loadScript(this, fullCalendar+'/fullcalendar-4.4.3/packages/interaction/main.js'),
-            loadScript(this, fullCalendar+'/fullcalendar-4.4.3/packages/interaction/main.min.js'),
-
-            loadStyle(this, fullCalendar+'/fullcalendar-4.4.3/packages/core/main.css'), // load CSS
-            loadStyle(this, fullCalendar+'/fullcalendar-4.4.3/packages/core/main.min.css'),
-            loadStyle(this, fullCalendar+'/fullcalendar-4.4.3/packages/daygrid/main.css'),
-
-            loadScript(this, fullCalendar+'/fullcalendar-4.4.3/packages/list/main.js'),
-            loadScript(this, fullCalendar+'/fullcalendar-4.4.3/packages/list/main.min.js'),
-
-            loadScript(this, fullCalendar+'/fullcalendar-4.4.3/packages/moment/main.js'),
-            loadScript(this, fullCalendar+'/fullcalendar-4.4.3/packages/moment/main.min.js'),
-
-            loadScript(this, fullCalendar+'/fullcalendar-4.4.3/packages/timegrid/main.js'),
-            loadScript(this, fullCalendar+'/fullcalendar-4.4.3/packages/timegrid/main.min.js'),
+            loadScript(this, fCalendar + "/packages/daygrid/main.js"),
+            loadStyle(this, fCalendar + "/packages/daygrid/main.css"),
+            loadScript(this, fCalendar + "/packages/list/main.js"),
+            loadStyle(this, fCalendar + "/packages/list/main.css"),
+            loadScript(this, fCalendar + "/packages/timegrid/main.js"),
+            loadStyle(this, fCalendar + "/packages/timegrid/main.css"),
+            loadScript(this, fCalendar + "/packages/interaction/main.js"),
+            loadScript(this, fCalendar + "/packages/moment/main.js"),
+            loadScript(this, fCalendar + "/packages/moment-timezone/main.js"),
+            loadScript(this, fCalendar + "/packages/google-calendar/main.js"),
         ])
         .then(() => {
             console.log('Loaded JS and CSS');
             this.renderCalendar();
         })
-        .catch(() => {});
+        .catch((error) => {
+            console.log('Error loading JS and CSS: ' , error);
+        });
     }
 
     async renderCalendar(){
@@ -66,7 +64,7 @@ export default class LibFullCalendarDemo extends LightningElement {
                 events: this.events
             });
             this.calendar.render();
-            //this.calendar.setOption('locale', 'fr'); // set locale
+            this.calendar.setOption('locale', LOCALE); // set locale
             this.calendar.on('eventClick', this.handleEventClick.bind(this) );
             this.calendar.on('dateClick', this.handleDateClicked.bind(this) );
             console.log('Calendar rendered');
@@ -90,7 +88,7 @@ export default class LibFullCalendarDemo extends LightningElement {
         })
         .catch(error => {
 
-        })
+        });
     }
 
     handleEventClick(info) {

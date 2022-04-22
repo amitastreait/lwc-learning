@@ -1,0 +1,50 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Custom Label" icon-name="standard:contact">
+        <div class="slds-p-around_large">
+            <h1>Custom CSS</h1>
+        </div>
+        <div class="slds-p-around_large">
+            <lightning-input message-when-bad-input="Field is Required" type="text" variant="standard"
+                name="FirstName" label={label.FirstName} required onchange={handleInputChange}></lightning-input>
+            <lightning-input type="text" variant="standard" name="LastName" label={label.LastName} required onchange={handleInputChange}></lightning-input>
+            <lightning-input type="text" variant="standard" name="Title" label="Title"  required="true" onchange={handleInputChange}></lightning-input>
+            <lightning-input type="email" variant="standard" name="Email" label="Email" required onchange={handleInputChange}></lightning-input>
+            <lightning-input type="phone" variant="standard" name="Phone" label="Phone" onchange={handleInputChange}></lightning-input>
+            <lightning-combobox
+                name="Level__c"
+                label="Status"
+                required="true"
+                placeholder="Select Progress"
+                options={options}
+                onchange={handleInputChange} >
+            </lightning-combobox>
+            <lightning-input-address
+                address-label="Address"
+                street-label="Street"
+                city-label="City"
+                country-label="Country"
+                province-label="Province"
+                postal-code-label="PostalCode"
+                street="121 Spear St."
+                city="San Francisco"
+                country="US"
+                province="CA"
+                postal-code="94105"
+                required
+                field-level-help="Help Text for inputAddress field" >
+            </lightning-input-address>
+        </div>
+        <div class="slds-p-around_large">
+            <lightning-button variant="brand" label="Save Contact" title="Save Contact" onclick={handleClick}></lightning-button>
+        </div>
+        <div class="slds-p-around_large">
+            <lightning-button-group>
+                <lightning-button label="Show Info Toast" onclick={handleInfo}></lightning-button>
+                <lightning-button label="Show Error Toast" onclick={handleError}></lightning-button>
+                <lightning-button label="Show Warning Toast" onclick={handleWarning}></lightning-button>
+                <lightning-button label="Show Success Toast" onclick={handleInfoSuccess}></lightning-button>
+                <lightning-button label="Toast with URL" onclick={handleCritical}></lightning-button>
+            </lightning-button-group>
+        </div>
+    </lightning-card>
+</template>
