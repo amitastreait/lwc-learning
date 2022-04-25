@@ -1,12 +1,37 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
-import { api, LightningElement } from 'lwc';
+import { api, LightningElement, wire, track} from 'lwc';
 import LastName from '@salesforce/label/c.LastName';
 import FirstName from '@salesforce/label/c.FirstName';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { createRecord } from 'lightning/uiRecordApi';
+
+import { CurrentPageReference } from 'lightning/navigation';
+
 export default class CustomLabels extends LightningElement {
 
     @api recordId;
+    currentPageReference;
+    generateUrlOnConnected;
+    @track urlParams = {
+
+    }
+
+    @wire(CurrentPageReference)
+    setCurrentPageReference(pageRef) {
+        this.currentPageReference = pageRef;
+        console.log('currentPageReference', pageRef);
+        if(this.currentPageReference){
+            this.urlParams.AccountId = this.currentPageReference.state.c__AccountId;
+            this.urlParams.param1 = this.currentPageReference.state.c__param1;
+        }
+        /*if (this.connected) {
+            console.log('connected');
+        } else {
+            this.generateUrlOnConnected = true;
+        }*/
+    }
+
 
     label = {
         LastName : LastName,

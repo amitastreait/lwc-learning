@@ -1,0 +1,15 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Page Reference" icon-name="standard:account">
+        <div class="slds-p-horizontal_small">
+            <lightning-button-group>
+                <lightning-button label="New Account" onclick={handleNewAccount}></lightning-button>
+                <lightning-button label="Edit Account" onclick={handleEditAccount}></lightning-button>
+                <lightning-button label="View Account" onclick={handleViewAccount}></lightning-button>
+                <lightning-button label="Account Home" onclick={navigateToObjectHomePage}></lightning-button>
+                <lightning-button label="Account List" onclick={navigateToObjectListViewPage}></lightning-button>
+                <lightning-button label="Open in Xero" onclick={navigateToExternalUrl}></lightning-button>
+                <lightning-button label="Navigate to Custom Label" onclick={navigateToLWC}></lightning-button>
+            </lightning-button-group>
+        </div>
+    </lightning-card>
+</template>
