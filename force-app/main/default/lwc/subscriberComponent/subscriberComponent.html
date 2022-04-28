@@ -1,8 +1,13 @@
 <template>
     <lightning-card variant="Narrow" title="Subscriber Component" icon-name="standard:account">
         <div class="slds-p-horizontal_small">
-            <p>{messageData.recordId}</p>
-            <p>{messageData.message}</p>
+            <div if:true={messageData}>
+                <p>{messageData.recordId}</p>
+                <p>{messageData.message}</p>
+            </div>
+        </div>
+        <div class="slds-p-around_large">
+            <lightning-textarea label="Message Recieved" value={message}></lightning-textarea>
         </div>
         <p slot="footer">Subscriber Component</p>
     </lightning-card>

@@ -1,0 +1,21 @@
+<template>
+    <lightning-card  variant="Narrow" title="Opportunity Table" icon-name="utility:ribbon">
+        <lightning-button variant="brand" label="Process Selected Rows" title="Process Selected Rows" onclick={handleClick}></lightning-button>
+        <div class="slds-p-horizontal_small">
+            <lightning-datatable
+                key-field="Id"
+                data={data}
+                show-row-number-column
+                hide-checkbox-column
+                max-row-selection='1'
+                draft-values={draftValues}
+                onrowselection={handleRowSelection}
+                onrowaction={handleRowAction}
+                onsave={handleSave}
+                columns={columns}>
+            </lightning-datatable>
+        </div>
+        <p slot="footer">Card Footer</p>
+    </lightning-card>
+
+</template>
