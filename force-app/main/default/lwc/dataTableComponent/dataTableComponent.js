@@ -1,5 +1,8 @@
 import { LightningElement, track, wire } from 'lwc';
 import  findOpportunities from '@salesforce/apex/OpportunityTableHandler.findOpportunities';
+import { updateRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { refreshApex } from '@salesforce/apex';
 
 const actions = [
     { label: 'Edit', name: 'edit' },
@@ -52,32 +55,34 @@ const columnList = [
 export default class DataTableComponent extends LightningElement {
     @track data;
     @track columns = columnList;
+    isLoading = false;
 
     @track draftValues = [];
 
+    @track wiredOpportunitiesData; // {error, data }
+
     @wire(findOpportunities)
-    wiredOpportunities({ error, data }) {
-        if (data) {
-            console.log('Data: ', data); // readonly
-            this.data = JSON.parse( JSON.stringify(data) ) //[...data];
+    wiredOpportunities(result) {
+        this.wiredOpportunitiesData = result; // { error, data }
+        if (result.data) {
+            //console.log('Data: ', data); // readonly
+            this.data = JSON.parse( JSON.stringify(result.data) ) //[...data];
             let baseUrl = 'https://'+window.location.host+'/lightning/r/'; // Account/AccountId/view
             this.data.forEach( record => {
                 record.AccountName    = record.AccountId ? record.Account.Name : '';
                 record.AccountUrl     = record.AccountId ? baseUrl + 'Account/'+ record.AccountId+'/view' : '';
                 record.OpportunityUrl = baseUrl + 'Opportunity/'+ record.Id+'/view';
             });
-            console.log('this.Data: ', this.data); // readonly
+            //console.log('this.Data: ', this.data); // readonly
         }
-        if(error){
-            console.error('error', error);
+        if(result.error){
+            console.error('error', result.error);
         }
     }
 
     handleRowSelection(event) {
         event.preventDefault();
         console.log('event: ', event);
-        //let selectedRows = event.detail.selectedRows;
-        //console.log('selectedRows: ', selectedRows);
     }
 
     handleClick(event) {
@@ -116,7 +121,40 @@ export default class DataTableComponent extends LightningElement {
 
     handleSave(event) {
         event.preventDefault();
+        this.isLoading = true;
         let draftValues = event.detail.draftValues;
-        console.log('draftValues: ', JSON.stringify(draftValues, null, "\t"));
+        // [ {}, {} ]
+        // updateRecord(recordInput)
+        // [ { fields: {Id: '', Name: ''} }, { fields: {Id: '', Name: ''} } ]
+        let allRecords = []; // all the record inputs
+        draftValues.forEach( draft => {
+            const fields = {...draft } // { Id: '', Name: ''}
+            allRecords = [...allRecords, { fields : fields }];
+        })
+        console.log('allRecords: ', JSON.stringify(allRecords, null, "\t"));
+        // Prepare the Array of updateRecord Promises
+        // [ { fields: {Id: '', Name: ''} }, { fields: {Id: '', Name: ''} } ]
+        let updateRecordPromises = [];
+        allRecords.forEach( recordInput => {
+            updateRecordPromises = [...updateRecordPromises, updateRecord(recordInput) ];
+        })
+        //const promises = allRecords.map(recordInput => updateRecord(recordInput));
+        Promise.all(updateRecordPromises)
+        .then(() => {
+            this.dispatchEvent(new ShowToastEvent({
+                title: 'Success',
+                message: 'Selected Records Updated!',
+                variant: 'success'
+            }));
+            this.draftValues = [];
+            refreshApex(this.wiredOpportunitiesData); // {error, data}
+        })
+        .catch(error => {
+            console.error('error: ', error);
+        })
+        .finally(() => {
+            console.log('finally');
+            this.isLoading = false;
+        });
     }
 }

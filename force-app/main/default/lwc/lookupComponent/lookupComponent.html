@@ -1,0 +1,98 @@
+<template>
+    <lightning-card  variant="Narrow">
+        <div class="slds-p-horizontal_small">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="combobox-id-4" id="combobox-label-id-32">Account Name</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-combobox_container">
+                        <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+                            <div if:true={selectedRecord} class="slds-combobox_container slds-has-selection">
+                                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
+                                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right" role="none">
+                                        <span class="slds-icon_container slds-icon-standard-account slds-combobox__input-entity-icon" title="Account">
+                                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                            <use xlink:href="/apexpages/slds/latest/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Account</span>
+                                        </span>
+                                        <button type="button" class="slds-input_faux slds-combobox__input slds-combobox__input-value" aria-labelledby="combobox-label-id-34 combobox-id-5-selected-value" id="combobox-id-5-selected-value" aria-controls="listbox-id-5" aria-expanded="false"
+                                        aria-haspopup="listbox">
+                                        <span class="slds-truncate" id="combobox-value-id-19">
+                                            {selectedRecord.Name}
+                                        </span>
+                                        </button>
+                                        <button onclick={handleRemove} class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" title="Remove selected option">
+                                            <svg class="slds-button__icon" aria-hidden="true">
+                                                <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                                            </svg>
+                                            <span class="slds-assistive-text">Remove selected option</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div if:false={selectedRecord} class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                <input type="text" class="slds-input slds-combobox__input slds-has-focus slds-combobox__input-value" id="combobox-id-4" aria-activedescendant="option1" aria-autocomplete="list" aria-controls="listbox-id-4" aria-expanded="true" aria-haspopup="listbox"
+                                    role="combobox" placeholder="Search..."
+                                    onkeyup={handleInputChange}
+                                    onchange={handleInputChange} />
+                                <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                                    <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                                        <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div if:true={records} id="listbox-id-4" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                                <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                    <li if:true={records} role="presentation" class="slds-listbox__item">
+                                        <div aria-selected="true" id="option0" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_term slds-has-focus" role="option">
+                                            <span class="slds-media__figure slds-listbox__option-icon">
+                                                <span class="slds-icon_container slds-icon-utility-search" title="Search for term: ">
+                                                <svg class="slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                                                    <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                                                </svg>
+                                                <span class="slds-assistive-text">Search for term: </span>
+                                                </span>
+                                            </span>
+                                            <span class="slds-media__body">
+                                            <span class="slds-listbox__option-text slds-listbox__option-text_entity">
+                                                {searchKeyword}
+                                            </span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <template if:true={records} for:each={records} for:item="record" for:index="index">
+                                        <li onclick={handleSelected} data-record-id={record.Id} key={record.Id} role="presentation" class="slds-listbox__item">
+                                            <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                                <span class="slds-media__figure slds-listbox__option-icon">
+                                                    <span class="slds-icon_container slds-icon-standard-account">
+                                                    <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                        <use xlink:href="/apexpages/slds/latest/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+                                                    </svg>
+                                                    </span>
+                                                </span>
+                                                <span class="slds-media__body">
+                                                    <span class="slds-listbox__option-text slds-listbox__option-text_entity">
+                                                    <span>
+                                                    {record.Name}
+                                                </span>
+                                                </span>
+                                                    <!-- <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">Account</span> -->
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                
+                </div>
+            </div>
+         
+    </lightning-card>
+</template>
