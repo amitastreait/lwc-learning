@@ -1,0 +1,42 @@
+<template>
+  <lightning-card
+    variant="Narrow"
+    title="Custom Lookup Demo"
+    icon-name="custom:custom15"
+  >
+    <div class="slds-p-horizontal_small">
+      <c-lookup-component
+        lookup-label="Account Name"
+        object-api-name="Account"
+        field-api-name="Name"
+        icon-name="standard:account"
+        parent-api-name="AccountId"
+        required={required}
+        onlookup={handleAccountLookup}
+      >
+      </c-lookup-component>
+      <c-lookup-component
+        lookup-label="Company Name"
+        object-api-name="Account"
+        field-api-name="Name"
+        icon-name="standard:account"
+        parent-api-name="Company__c"
+        required={required}
+        onlookup={handleAccountLookup}
+      >
+      </c-lookup-component>
+      <c-lookup-component
+        lookup-label="Contact Name"
+        object-api-name="Contact"
+        field-api-name="Name"
+        icon-name="standard:contact"
+        required={required}
+        parent-api-name="ContactId"
+        onlookup={handleContactLookup}
+      >
+      </c-lookup-component>
+    </div>
+
+    <p slot="footer">Card Footer</p>
+  </lightning-card>
+</template>
