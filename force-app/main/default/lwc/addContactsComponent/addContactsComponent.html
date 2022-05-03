@@ -1,0 +1,80 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Add Contacts" icon-name="standard:contact">
+        <lightning-button slot="actions" variant="brand" label="Save Information" title="Save Information" onclick={handleClick}></lightning-button>
+        <div class="slds-p-horizontal_small">
+            <!-- Account Information -->
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" padding="around-small"
+                    small-device-size="12" medium-device-size="6" large-device-size="6" >
+                    <lightning-input type="text" variant="standard" name="Name" label="Account Name" required
+                    ></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small"
+                    small-device-size="12" medium-device-size="6" large-device-size="6">
+                    <lightning-input type="text" variant="standard" name="Phone" label="Phone"></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <!-- Contact Information -->
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Opportunity Name">First Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Account Name">Last Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Close Date">Email</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Stage">Phone</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Confidence">Title</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Amount">Actions</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template if:true={contacts} for:each={contacts} for:item="con" for:index="index">
+                        <tr key={con.Id} class="slds-hint-parent">
+                            <td data-label="First Name" scope="row">
+                                <lightning-input type="text" variant="label-hidden" name="FirstName"
+                                    label="First Name" required ></lightning-input>
+                            </td>
+                            <td data-label="Last Name">
+                                <lightning-input type="text" variant="label-hidden" name="LastName"
+                                    label="Last Name" required ></lightning-input>
+                            </td>
+                            <td data-label="Email">
+                                <lightning-input type="email" variant="label-hidden" name="Email"
+                                    label="Email" required ></lightning-input>
+                            </td>
+                            <td data-label="Phone">
+                                <lightning-input type="phone" variant="label-hidden" name="Phone"
+                                    label="Phone" required ></lightning-input>
+                            </td>
+                            <td data-label="Title">
+                                <lightning-input type="text" variant="label-hidden" name="Title"
+                                    label="Title" required ></lightning-input>
+                            </td>
+                            <td data-label="Action">
+                                <lightning-button variant="brand" icon-name="utility:add"
+                                    onclick={handleAddRow}></lightning-button>
+                                &nbsp;
+                                <lightning-button if:true={index} data-index={index} variant="destructive" icon-name="utility:delete"
+                                    onclick={handleRemoveRow}></lightning-button>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        <p slot="footer">Card Footer</p>
+    </lightning-card>
+</template>

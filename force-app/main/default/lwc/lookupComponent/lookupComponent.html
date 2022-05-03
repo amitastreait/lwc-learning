@@ -70,19 +70,15 @@
               role="none"
             >
               <input
-                type="text"
-                class="slds-input slds-combobox__input slds-has-focus slds-combobox__input-value"
-                id="combobox-id-4"
-                aria-activedescendant="option1"
-                aria-autocomplete="list"
-                aria-controls="listbox-id-4"
-                aria-expanded="true"
-                aria-haspopup="listbox"
-                role="combobox"
-                placeholder={placeholder}
+                type="text" class="slds-input slds-combobox__input slds-has-focus slds-combobox__input-value"
+                id="combobox-id-4" aria-activedescendant="option1"
+                aria-autocomplete="list" aria-controls="listbox-id-4"
+                aria-expanded="true" aria-haspopup="listbox"
+                role="combobox" placeholder={placeholder}
                 required={required}
                 onkeyup={handleInputChange}
                 onchange={handleInputChange}
+                onfocus={handleInputChange}
               />
               <span
                 class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right"

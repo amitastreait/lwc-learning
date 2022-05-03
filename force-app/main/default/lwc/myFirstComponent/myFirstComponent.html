@@ -1,3 +1,32 @@
 <template>
-    
+    <lightning-card  variant="Narrow"  title="Hello" icon-name="standard:account">
+        <lightning-button-icon  icon-name="utility:down" variant="border-filled" alternative-text="Show More" slot="actions"></lightning-button-icon>
+        <div class="slds-p-horizontal_small">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th scope="col"> Opportunity Name </th>
+                        <th scope="col"> Account Name </th>
+                        <th scope="col"> Close Date </th>
+                        <th scope="col"> Stage </th>
+                        <th scope="col"> Confidence </th>
+                        <th scope="col"> Amount </th>
+                        <th scope="col"> Contact </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="slds-hint-parent">
+                        <th scope="row"> Cloudhub </th>
+                        <th scope="row"> Cloudhub </th>
+                        <th scope="row"> 4/14/2015 </th>
+                        <th scope="row"> Prospecting </th>
+                        <th scope="row"> 20% </th>
+                        <th scope="row"> k </th>
+                        <th scope="row"> test@cloudhub.com </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p slot="footer">Card Footer</p>
+    </lightning-card>
 </template>
