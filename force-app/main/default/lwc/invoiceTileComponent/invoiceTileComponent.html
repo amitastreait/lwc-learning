@@ -1,0 +1,24 @@
+<template>
+    <lightning-card  variant="Narrow"  title={invoiceNumber} icon-name="custom:custom17">
+        <lightning-spinner alternative-text="Loading" size="small" if:true={showSpinner}></lightning-spinner>
+        <lightning-button-group slot="actions">
+            <lightning-button if:false={showStatus}   variant="brand-outline" label="Void Invoice" onclick={handleVoid}></lightning-button>
+            <lightning-button variant="brand-outline" label="Record Payment" onclick={handlePayment}></lightning-button>
+            <lightning-button variant="brand-outline" label="Record Refund" onclick={handleRefund}></lightning-button>
+        </lightning-button-group>
+        <div class="slds-p-around_large">
+            <div class="custom-modal" if:true={showModal}>
+                <section role="dialog" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <c-create-payment-component api-name={apiName} fields={paymentFields} oncancel={handleClose} onsuccess={handleSuccess} invoice-id={recordId}></c-create-payment-component>
+                        </div>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

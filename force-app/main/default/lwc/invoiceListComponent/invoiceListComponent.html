@@ -1,0 +1,17 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Invoice List" icon-name="custom:custom17">
+        <div class="slds-p-around_small" if:true={errors}>
+            <c-error-panel type="inlineMessage" friendly-message="Error While Creating Record" errors={errors}></c-error-panel>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <lightning-datatable
+                key-field="id"
+                data={dataList}
+                show-row-number-column
+                hide-checkbox-column
+                columns={columnsList}
+                onrowaction={handleRowAction}>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+</template>

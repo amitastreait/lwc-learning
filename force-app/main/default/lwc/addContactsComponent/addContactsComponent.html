@@ -21,6 +21,9 @@
                 <thead>
                     <tr class="slds-line-height_reset">
                         <th class="" scope="col">
+                            <div class="slds-truncate" title="Confidence">Account Name</div>
+                        </th>
+                        <th class="" scope="col">
                             <div class="slds-truncate" title="Opportunity Name">First Name</div>
                         </th>
                         <th class="" scope="col">
@@ -33,7 +36,7 @@
                             <div class="slds-truncate" title="Stage">Phone</div>
                         </th>
                         <th class="" scope="col">
-                            <div class="slds-truncate" title="Confidence">Title</div>
+                            <div class="slds-truncate" title="Languages">Languages</div>
                         </th>
                         <th class="" scope="col">
                             <div class="slds-truncate" title="Amount">Actions</div>
@@ -43,25 +46,37 @@
                 <tbody>
                     <template if:true={contacts} for:each={contacts} for:item="con" for:index="index">
                         <tr key={con.Id} class="slds-hint-parent">
+                            <td data-label="Account Name">
+                                <c-lookup-component
+                                    object-api-name="Account"
+                                    field-api-name="Name"
+                                    icon-name="standard:account"
+                                    parent-api-name="AccountId"
+                                    index={index}
+                                    variant = 'label-hidden'
+                                    onlookup={handleAccountLookup}
+                                >
+                                </c-lookup-component>
+                            </td>
                             <td data-label="First Name" scope="row">
                                 <lightning-input type="text" variant="label-hidden" name="FirstName"
-                                    label="First Name" required ></lightning-input>
+                                    label="First Name" required onchange={handleChange} data-index={index} ></lightning-input>
                             </td>
                             <td data-label="Last Name">
                                 <lightning-input type="text" variant="label-hidden" name="LastName"
-                                    label="Last Name" required ></lightning-input>
+                                    label="Last Name" required onchange={handleChange} data-index={index}></lightning-input>
                             </td>
                             <td data-label="Email">
                                 <lightning-input type="email" variant="label-hidden" name="Email"
-                                    label="Email" required ></lightning-input>
+                                    label="Email" required onchange={handleChange} data-index={index}></lightning-input>
                             </td>
                             <td data-label="Phone">
                                 <lightning-input type="phone" variant="label-hidden" name="Phone"
-                                    label="Phone" required ></lightning-input>
+                                    label="Phone" required onchange={handleChange} data-index={index}></lightning-input>
                             </td>
-                            <td data-label="Title">
-                                <lightning-input type="text" variant="label-hidden" name="Title"
-                                    label="Title" required ></lightning-input>
+                            <td data-label="Languages">
+                                <lightning-input type="text" variant="label-hidden" name="Languages__c"
+                                    label="Languages__c" required onchange={handleChange} data-index={index}></lightning-input>
                             </td>
                             <td data-label="Action">
                                 <lightning-button variant="brand" icon-name="utility:add"

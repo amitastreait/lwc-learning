@@ -1,0 +1,21 @@
+<template>
+    <lightning-card  variant="Narrow"  title="New Invoice" icon-name="standard:expense_report_entry">
+        <div class="slds-p-horizontal_small">
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="6" large-device-size="6" >
+                    <div class="custom-box">
+                        <lightning-input type="text" variant="label-stacked" name="Name" label="From Name" ></lightning-input>
+                        <lightning-input type="phone" variant="label-stacked" name="Name" label="Phone" ></lightning-input>
+                        <lightning-input type="email" variant="label-stacked" name="Name" label="Email" ></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="6" large-device-size="6">
+                    <div class="custom-box">
+
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>

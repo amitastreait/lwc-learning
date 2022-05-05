@@ -1,0 +1,282 @@
+<template>
+    <lightning-quick-action-panel header="New Invoice">
+        <!-- Display Invoice Information -->
+        <lightning-spinner alternative-text="Loading" variant="brand" size="small" if:true={showSpinner}></lightning-spinner>
+        <div class="slds-p-around_small" if:true={errors}>
+            <c-error-panel type="inlineMessage" friendly-message="Error While Creating Record" errors={errors}></c-error-panel>
+        </div>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="6" large-device-size="6" >
+                <lightning-card variant="Narrow" title="Customer" icon-name="standard:user">
+                    <div class="slds-p-horizontal_small">
+                        <div if:true={customerError} class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                            <span class="slds-assistive-text">error</span>
+                            <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Description of icon when needed">
+                                <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#error"></use>
+                                </svg>
+                            </span>
+                            <h2>
+                                {customerError}
+                            </h2>
+                        </div>
+
+                        <c-search-component
+                            onlookup={handleLookup}
+                            fields-to-create={fieldsToCreate}
+                            create-record=false
+                            parent-a-p-i-name="Contact__c"
+                            obj-name="Contact"
+                            display-fields="Name, Email, Phone"
+                            fields = {fields}
+                            icon-name="standard:user"
+                            label-name="Bill To Customer">
+                        </c-search-component>
+                        <div class="slds-p-top_medium" if:true={selectedCustomer}>
+                            <!-- display information about selected customer -->
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="12" large-device-size="3" >
+                                    <div class="custom-box">Email To</div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="12" large-device-size="3">
+                                    <div class="custom-box">
+                                        <lightning-formatted-email value={selectedCustomer.Email} hide-icon="true"></lightning-formatted-email>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="12" large-device-size="3" >
+                                    <div class="custom-box">Contact To</div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="12" large-device-size="3">
+                                    <div class="custom-box">
+                                        <lightning-formatted-phone value={selectedCustomer.Phone} hide-icon="true"></lightning-formatted-phone>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="12" large-device-size="3" >
+                                    <div class="custom-box">Address</div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="12" large-device-size="3">
+                                    <div class="custom-box">
+                                        <lightning-formatted-address
+                                            street={selectedCustomer.MailingStreet}
+                                            city={selectedCustomer.MailingCity}
+                                            country={selectedCustomer.MailingCountry}
+                                            province={selectedCustomer.MailingState}
+                                            postal-code={selectedCustomer.MailingPostalCode}>
+                                        </lightning-formatted-address>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </div>
+                    </div>
+                </lightning-card>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="6" large-device-size="6">
+                <lightning-card variant="Narrow" icon-name="custom:custom56" title="Invoice Details">
+                    <lightning-button slot="actions" variant="brand" label="Save Draft Invoice" title="Save Draft Invoice"
+                        onclick={handleDraftInvoice}>
+                    </lightning-button>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="12" large-device-size="6" >
+                            <div class="custom-box">
+                                <lightning-input type="text" variant="standard" name="Invoice_Number__c" label="Invoice Number"
+                                    required="true" onchange={handleInputChange}>
+                                </lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="12" large-device-size="6">
+                            <div class="custom-box">
+                                <lightning-input type="date" variant="standard" name="InvoiceDate__c" label="Invoice Date"
+                                    required="true" onchange={handleInputChange}>
+                                </lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="12" large-device-size="6" >
+                            <div class="custom-box">
+                                <lightning-input type="date" variant="standard" name="Due_Date__c" label="Due Date"
+                                    required="true" onchange={handleInputChange}>
+                                </lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="12" large-device-size="6">
+                            <div class="custom-box">
+                                <lightning-input type="text" variant="standard" name="Reference__c" label="Reference"
+                                    required="true" onchange={handleInputChange}>
+                                </lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="12" large-device-size="6" >
+                            <div class="custom-box">
+                                <lightning-textarea type="date" variant="standard" name="Comments__c" label="Comments"
+                                    required="true" onchange={handleInputChange}>
+                                </lightning-textarea>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="12" large-device-size="6">
+                            <div class="custom-box">
+                                <lightning-textarea type="text" variant="standard" name="FromAddress__c" label="From Addres"
+                                    required="true" onchange={handleInputChange}>
+                                </lightning-textarea>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-card>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout multiple-rows > <!-- if:true={invoiceId} -->
+            <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="6" large-device-size="12" >
+                <div if:true={errorMessage} class="slds-p-top_small slds-p-bottom_small slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Description of icon when needed">
+                        <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#error"></use>
+                        </svg>
+                    </span>
+                    <h2>
+                        {errorMessage}
+                    </h2>
+                </div>
+                <lightning-card title="Invoice Lines" icon-name="custom:custom63">
+                    <lightning-button slot="actions" variant="brand" label="Save Line Items" title="Save Line Items" onclick={handleSaveItems}></lightning-button>
+                    <lightning-button slot="actions" variant="brand-outline" label="Add More Item" title="Add More Item" onclick={handleAddItems}></lightning-button>
+                    <div class="slds-p-horizontal_small">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-label="Example table of Opportunities with vertical borders">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Item Name">Item Name</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Description">Description</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Quantity">Quantity</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Unit Amount">Unit Amount</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Tax Type">Tax Type</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Tax %">Tax %</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Tax Amount">Tax Amount</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Total Amount">Total Amount</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Actions">Actions</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template if:true={items} for:each={items} for:item="line" for:index="index">
+                                    <tr key={line.Id} class="slds-hint-parent">
+                                        <th data-label="Product Name" scope="row">
+                                            <div title="Item Name">
+                                                <!-- Add Search Component -->
+                                                <c-search-component
+                                                    onlookup={handleLookupProduct}
+                                                    fields-to-create={productsToCreate}
+                                                    create-record=false
+                                                    parent-a-p-i-name="Product__c"
+                                                    obj-name="Product2"
+                                                    display-fields="Name, ProductCode"
+                                                    fields = {productsfields}
+                                                    label-name="Item Name"
+                                                    data-index={index}
+                                                    index={index}>
+                                                </c-search-component>
+                                            </div>
+                                        </th>
+                                        <td data-label="Description">
+                                            <div class="slds-truncate" title={line.Description__c}>
+                                                <lightning-input type="text" variant="label-hidden" name="Description__c" label="label"
+                                                    value={line.Description__c} onchange={handleLineInputChange} data-index={index}
+                                                    required="true">
+                                                </lightning-input>
+                                            </div>
+                                        </td>
+                                        <td data-label="Quantity">
+                                            <div class="slds-truncate" title={line.Quantity__c}>
+                                                <lightning-input type="number" variant="label-hidden" name="Quantity__c" label="label"
+                                                    required="true" onchange={handleLineInputChange} value={line.Quantity__c} steps="1" data-index={index} >
+                                                </lightning-input>
+                                            </div>
+                                        </td>
+                                        <td data-label="UnitAmount">
+                                            <div class="slds-truncate" title="UnitAmount">
+                                                <lightning-input type="number" formatter="currency" variant="label-hidden" name="Amount__c"
+                                                    label="label" required="true" onchange={handleLineInputChange} steps="any" data-index={index}
+                                                    value={line.Amount__c}>
+                                                </lightning-input>
+                                            </div>
+                                        </td>
+                                        <td data-label="Tax Type">
+                                            <div title="Tax Type">
+                                                <lightning-combobox
+                                                    name="Tax_Type__c" data-index={index}
+                                                    label="TaxType"
+                                                    value={line.Tax_Type__c}
+                                                    variant="label-hidden"
+                                                    dropdown-alignment="auto"
+                                                    onchange={handleLineInputChange}
+                                                    options={taxType} >
+                                                </lightning-combobox>
+                                            </div>
+                                        </td>
+                                        <td data-label="Tax %">
+                                            <div class="slds-truncate" title="Tax Percentage">
+                                                <lightning-input data-index={index} onchange={handleLineInputChange}
+                                                    value={line.Tax__c} variant="label-hidden"
+                                                    type="number" name="Tax__c" formatter="percent-fixed" step="1">
+                                                </lightning-input>
+                                            </div>
+                                        </td>
+                                        <td data-label="Tax Amount">
+                                            <div class="slds-truncate" title="Tax Amount">
+                                                <lightning-formatted-number value={line.Tax_Amount__c}
+                                                    format-style="currency" onchange={handleLineInputChange} data-index={index} currency-code="USD">
+                                                </lightning-formatted-number>
+                                            </div>
+                                        </td>
+                                        <td data-label="Total Line Amount">
+                                            <div class="slds-truncate" title="Total Line Amount">
+                                                <lightning-formatted-number value={line.FinalAmount__c}
+                                                    format-style="currency" data-index={index} onchange={handleLineInputChange} currency-code="USD">
+                                                </lightning-formatted-number>
+                                            </div>
+                                        </td>
+                                        <td data-label="Actions">
+                                            <div class="slds-truncate" title="Actions">
+                                                <lightning-button if:true={index} icon-name="utility:delete" data-index={index} variant="destructive" 
+                                                    title="Delete" onclick={handleDeleteItem}>
+                                                </lightning-button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </lightning-card>
+            </lightning-layout-item>
+        </lightning-layout>
+        <div slot="footer">
+            <lightning-button variant="neutral" label="Cancel" onclick={handleCancel}></lightning-button>
+            <!-- <lightning-button variant="brand" label="Save Draft Invoice" class="slds-m-left_x-small"
+                onclick={handleDraftInvoice}>
+            </lightning-button> -->
+        </div>
+    </lightning-quick-action-panel>
+</template>

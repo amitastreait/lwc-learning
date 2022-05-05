@@ -1,0 +1,429 @@
+<template>
+    <lightning-card  variant="Narrow" > <!-- title={name} icon-name="standard:expense_report_entry" -->
+        <lightning-spinner alternative-text="Loading" size="small" variant="brand" if:true={showSpinner}></lightning-spinner>
+        <lightning-button-group slot="actions">
+            <lightning-button label="Edit" onclick={handleEdit}></lightning-button>
+            <lightning-button label="Clone" onclick={handleClone}></lightning-button>
+            <lightning-button label="Delete" onclick={handleDelete}></lightning-button>
+        </lightning-button-group>
+        <div class="slds-p-top_large slds-p-left_large slds-p-right_large">
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="3" large-device-size="2" >
+                    <p> <strong>Bill From</strong> </p>
+                    <p>{company}</p>
+                    <p>{address}</p>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="3" large-device-size="2">
+                    <p> <strong>Bill To</strong> </p>
+                    <p> {contactName} </p>
+                    <p> <lightning-formatted-email value={contactEmail} hide-icon></lightning-formatted-email> </p>
+                    <p> <lightning-formatted-phone value={contactPhone} hide-icon></lightning-formatted-phone> </p>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="3" large-device-size="1">
+                    <p> <strong>Invoice Date</strong> </p>
+                    <p><lightning-formatted-date-time value={invoiceDate}></lightning-formatted-date-time></p>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="3" large-device-size="1">
+                    <p> <strong>Due Date</strong> </p>
+                    <p><lightning-formatted-date-time value={dueDate}></lightning-formatted-date-time></p>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="3" large-device-size="1">
+                    <p> <strong>Invoice #</strong> </p>
+                    <p>{invoiceNumber}</p>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="3" large-device-size="1">
+                    <p> <strong>Reference</strong> </p>
+                    <p>{reference}</p>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="3" large-device-size="1">
+                    <p> <strong>Status</strong> </p>
+                    <p>{invoiceStatus}</p>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="3" large-device-size="1">
+                    <p> <strong>Paid Date</strong> </p>
+                    <p><lightning-formatted-date-time value={paidDate}></lightning-formatted-date-time></p>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="3" large-device-size="1">
+                    <p> <strong>Total</strong> </p>
+                    <p><lightning-formatted-number value={invoiceAmount} format-style="currency" currency-code="USD"></lightning-formatted-number></p>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="3" large-device-size="1">
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        <div class="slds-p-top_large slds-p-left_large slds-p-right_large">
+            <lightning-card  variant="Narrow"  title="Invoice Lines" icon-name="standard:webcart">
+                <lightning-button if:true={newItems.length} variant="brand-outlined" slot="actions" label="Save Lines" title="Save Lines" onclick={validateItems}>
+                </lightning-button>
+                <lightning-button if:false={showEditLines} variant="brand" slot="actions" label="Add Lines" title="Add Lines" onclick={handleAddItem}>
+                </lightning-button>
+                <div>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-label="Example table of Opportunities with vertical borders">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Item Code">Item Code</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Item Name">Item Name</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Description">Description</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Quantity">Quantity</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Unit Amount">Unit Amount</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Tax Type">Tax Type</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Tax %">Tax %</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Tax Amount">Tax Amount</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Total Amount">Total Amount</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Actions">Actions</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template if:true={items} for:each={items} for:item="line" for:index="index">
+                                <tr key={line.Id} class="slds-hint-parent">
+                                    <th data-label="Item Code" scope="row">
+                                        <div class="slds-truncate" title="Item Code">
+                                            {line.ProductCode}
+                                        </div>
+                                    </th>
+                                    <th data-label="Product Name" scope="row">
+                                        <div class="slds-truncate" title="Item Name">
+                                            {line.ProductName}
+                                        </div>
+                                    </th>
+                                    <td data-label="Description">
+                                        <div class="slds-truncate" title={line.Description__c}>
+                                            {line.Description__c}
+                                        </div>
+                                    </td>
+                                    <td data-label="Quantity">
+                                        <div class="slds-truncate" title={line.Quantity__c}>
+                                            {line.Quantity__c}
+                                        </div>
+                                    </td>
+                                    <td data-label="UnitAmount">
+                                        <div class="slds-truncate" title="UnitAmount">
+                                            <lightning-formatted-number value={line.Amount__c}
+                                                format-style="currency" currency-code="USD">
+                                            </lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td data-label="Tax Type">
+                                        <div class="slds-truncate" title="Tax Type">
+                                            {line.Tax_Type__c}
+                                        </div>
+                                    </td>
+                                    <td data-label="Tax %">
+                                        <div class="slds-truncate" title="Tax Percentage">
+                                            <lightning-formatted-number value={line.Tax__c} maximum-fraction-digits="2" format-style="percent"></lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td data-label="Tax Amount">
+                                        <div class="slds-truncate" title="Tax Amount">
+                                            <lightning-formatted-number value={line.Tax_Amount__c}
+                                                format-style="currency" currency-code="USD">
+                                            </lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td data-label="Total Line Amount">
+                                        <div class="slds-truncate" title="Total Line Amount">
+                                            <lightning-formatted-number value={line.FinalAmount__c}
+                                                format-style="currency" currency-code="USD">
+                                            </lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td data-label="Actions">
+                                        <div class="slds-truncate" title="Actions">
+                                            <lightning-button icon-name="utility:delete" data-record-id={line.Id} data-index={index} if:true={line.Id} variant="destructive" title="Delete" onclick={handleDeleteItem}>
+                                            </lightning-button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                            <template if:true={newItems} for:each={newItems} for:item="line" for:index="index">
+                                <tr key={line.Id} class="slds-hint-parent">
+                                    <th data-label="Item Code" scope="row">
+                                        <div class="slds-truncate" title="Item Code">
+                                            {line.ProductCode}
+                                        </div>
+                                    </th>
+                                    <th data-label="Product Name" scope="row">
+                                        <div title="Item Name">
+                                            <!-- Add Search Component -->
+                                            <c-search-component
+                                                onlookup={handleLookup}
+                                                fields-to-create={fieldsToCreate}
+                                                create-record=false
+                                                parent-a-p-i-name="Product__c"
+                                                obj-name="Product2"
+                                                display-fields="Name, ProductCode"
+                                                fields = {fields}
+                                                label-name="Item Name"
+                                                data-index={index}
+                                                index={index}>
+                                            </c-search-component>
+                                        </div>
+                                    </th>
+                                    <td data-label="Description">
+                                        <div class="slds-truncate" title={line.Description__c}>
+                                            <lightning-input type="text" variant="label-hidden" name="Description__c" label="label"
+                                                value={line.Description__c} onchange={handleInputChange} data-index={index}
+                                                required="true">
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                    <td data-label="Quantity">
+                                        <div class="slds-truncate" title={line.Quantity__c}>
+                                            <lightning-input type="number" variant="label-hidden" name="Quantity__c" label="label"
+                                                required="true" onchange={handleInputChange} value={line.Quantity__c} steps="1" data-index={index} >
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                    <td data-label="UnitAmount">
+                                        <div class="slds-truncate" title="UnitAmount">
+                                            <lightning-input type="number" formatter="currency" variant="label-hidden" name="Amount__c"
+                                                label="label" required="true" onchange={handleInputChange} steps="any" data-index={index}
+                                                value={line.Amount__c}>
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                    <td data-label="Tax Type">
+                                        <div title="Tax Type">
+                                            <lightning-combobox
+                                                name="Tax_Type__c" data-index={index}
+                                                label="Status"
+                                                value={line.Tax_Type__c}
+                                                variant="label-hidden"
+                                                dropdown-alignment="auto"
+                                                onchange={handleInputChange}
+                                                options={statusOptions} >
+                                            </lightning-combobox>
+                                        </div>
+                                    </td>
+                                    <td data-label="Tax %">
+                                        <div class="slds-truncate" title="Tax Percentage">
+                                            <lightning-input data-index={index} onchange={handleInputChange}
+                                                value={line.Tax__c} variant="label-hidden"
+                                                type="number" name="Tax__c" formatter="percent-fixed" step="1">
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                    <td data-label="Tax Amount">
+                                        <div class="slds-truncate" title="Tax Amount">
+                                            <lightning-formatted-number value={line.Tax_Amount__c}
+                                                format-style="currency" onchange={handleInputChange} data-index={index} currency-code="USD">
+                                            </lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td data-label="Total Line Amount">
+                                        <div class="slds-truncate" title="Total Line Amount">
+                                            <lightning-formatted-number value={line.FinalAmount__c}
+                                                format-style="currency" data-index={index} onchange={handleInputChange} currency-code="USD">
+                                            </lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td data-label="Actions">
+                                        <div class="slds-truncate" title="Actions">
+                                            <lightning-button icon-name="utility:delete" data-record-id={line.Id} data-index={index} variant="destructive" title="Delete" onclick={handleDeleteItem}>
+                                            </lightning-button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </lightning-card>
+        </div>
+        <div class="slds-grid slds-p-top_large slds-p-left_large slds-p-right_large">
+            <div class="slds-col slds-size_1-of-12">
+                <span><strong>SUBTOTAL:</strong></span>
+            </div>
+            <div class="slds-col slds-size_1-of-12">
+                <span> <lightning-formatted-number value={totalLineAmount} format-style="currency" currency-code="USD"></lightning-formatted-number> </span>
+            </div>
+        </div>
+        <div class="slds-grid slds-p-top_small slds-p-left_large slds-p-right_large">
+            <div class="slds-col slds-size_1-of-12">
+                <span><strong>TOTAL TAX:</strong></span>
+            </div>
+            <div class="slds-col slds-size_1-of-12">
+                <span> <lightning-formatted-number value={taxAmount} format-style="currency" currency-code="USD"></lightning-formatted-number> </span>
+            </div>
+        </div>
+        <div class="slds-grid slds-p-top_small slds-p-left_large slds-p-right_large">
+            <div class="slds-col slds-size_1-of-12">
+                <span><strong>GRAND TOTAL:</strong></span>
+            </div>
+            <div class="slds-col slds-size_1-of-12">
+                <span> <lightning-formatted-number value={invoiceAmount} format-style="currency" currency-code="USD"></lightning-formatted-number> </span>
+            </div>
+        </div>
+
+        <div class="slds-p-top_large slds-p-left_large slds-p-right_large">
+            <lightning-card variant="Narrow" title="Payments" icon-name="standard:payment_gateway">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-label="Example table of Opportunities with vertical borders">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Reference">Reference</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Date">Date</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Amount">Amount</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Status">Status</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Comments">Comments</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Actions">Actions</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template if:true={payments} for:each={payments} for:item="payment" for:index="index">
+                            <tr key={payment.Id} class="slds-hint-parent">
+                                <th data-label="Reference" scope="row">
+                                    <div class="slds-truncate" title="Reference">
+                                        {payment.Reference_Number__c}
+                                    </div>
+                                </th>
+                                <th data-label="Reference" scope="row">
+                                    <div class="slds-truncate" title="Date">
+                                        <lightning-formatted-date-time value={payment.Date__c}></lightning-formatted-date-time>
+                                    </div>
+                                </th>
+                                <th data-label="Amount" scope="row">
+                                    <div class="slds-truncate" title="Amount">
+                                        <lightning-formatted-number value={payment.Amount__c} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                                    </div>
+                                </th>
+                                <th data-label="Status" scope="row">
+                                    <div class="slds-truncate" title="Status">
+                                        {payment.Status__c}
+                                    </div>
+                                </th>
+                                <th data-label="Comments" scope="row">
+                                    <div class="slds-truncate" title="Comments">
+                                        {payment.Comments__c}
+                                    </div>
+                                </th>
+                                <th data-label="Actions" scope="row">
+                                    <div class="slds-truncate" title="Actions">
+                                        <lightning-button icon-name="utility:delete" data-record-id={payment.Id} data-index={index} variant="destructive" title="Delete" onclick={handleDeleteItem}>
+                                        </lightning-button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </lightning-card>
+        </div>
+        <div class="slds-grid slds-p-top_small slds-p-left_large slds-p-right_large">
+            <div class="slds-col slds-size_1-of-12">
+                <span><strong>AMOUNT PAID:</strong></span>
+            </div>
+            <div class="slds-col slds-size_1-of-12">
+                <span> <lightning-formatted-number value={totalPaidAmount} format-style="currency" currency-code="USD"></lightning-formatted-number> </span>
+            </div>
+        </div>
+        <div class="slds-p-top_large slds-p-bottom_large slds-p-left_large slds-p-right_large">
+            <lightning-card variant="Narrow" title="Refunds" icon-name="standard:contract_payment">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-label="Example table of Opportunities with vertical borders">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Reference">Reference</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Date">Date</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Amount">Amount</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Status">Status</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Reason">Reason</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Actions">Actions</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template if:true={refunds} for:each={refunds} for:item="refund" for:index="index">
+                            <tr key={refund.Id} class="slds-hint-parent">
+                                <th data-label="Reference" scope="row">
+                                    <div class="slds-truncate" title="Reference">
+                                        {refund.Reference_Number__c}
+                                    </div>
+                                </th>
+                                <th data-label="Reference" scope="row">
+                                    <div class="slds-truncate" title="Date">
+                                        <lightning-formatted-date-time value={refund.Date__c}></lightning-formatted-date-time>
+                                    </div>
+                                </th>
+                                <th data-label="Amount" scope="row">
+                                    <div class="slds-truncate" title="Amount">
+                                        <lightning-formatted-number value={refund.Amount__c} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                                    </div>
+                                </th>
+                                <th data-label="Status" scope="row">
+                                    <div class="slds-truncate" title="Status">
+                                        {refund.Status__c}
+                                    </div>
+                                </th>
+                                <th data-label="Comments" scope="row">
+                                    <div class="slds-truncate" title="Comments">
+                                        {refund.Reason__c}
+                                    </div>
+                                </th>
+                                <th data-label="Actions" scope="row">
+                                    <div class="slds-truncate" title="Actions">
+                                        <lightning-button icon-name="utility:delete" data-record-id={refund.Id} data-index={index} variant="destructive" title="Delete" onclick={handleDeleteItem}>
+                                        </lightning-button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </lightning-card>
+        </div>
+        <div style="float: none;" class="slds-grid slds-p-top_small slds-p-left_large slds-p-right_large">
+            <div class="slds-col slds-size_1-of-12">
+                <span><strong>AMOUNT REFUNDED:</strong></span>
+            </div>
+            <div class="slds-col slds-size_1-of-12">
+                <span> <lightning-formatted-number value={totalRefundAmount} format-style="currency" currency-code="USD"></lightning-formatted-number> </span>
+            </div>
+        </div>
+        <div class="slds-p-top_large slds-p-left_large slds-p-right_large">
+            <p> <strong>Comments</strong> </p>
+            <p><lightning-formatted-text value={comments} ></lightning-formatted-text></p>
+        </div>
+    </lightning-card>
+</template>
