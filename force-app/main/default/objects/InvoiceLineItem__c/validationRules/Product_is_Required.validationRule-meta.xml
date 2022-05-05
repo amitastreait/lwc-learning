@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_is_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISBLANK( Product__c )</errorConditionFormula>
+    <errorDisplayField>Product__c</errorDisplayField>
+    <errorMessage>Product is required!</errorMessage>
+</ValidationRule>

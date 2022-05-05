@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Address__c</fullName>
+    <externalId>false</externalId>
+    <formula>Company__r.BillingStreet &amp;&quot; &quot;&amp; Company__r.BillingCity &amp;&quot; &quot;&amp;Company__r.BillingState &amp;&quot; &quot;&amp;Company__r.BillingCountry&amp;&quot; &quot;&amp; Company__r.BillingCountry</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Address</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tax_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Tax Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>VAT</fullName>
+                <default>false</default>
+                <label>VAT</label>
+            </value>
+            <value>
+                <fullName>GST</fullName>
+                <default>false</default>
+                <label>GST</label>
+            </value>
+            <value>
+                <fullName>SGST</fullName>
+                <default>false</default>
+                <label>SGST</label>
+            </value>
+            <value>
+                <fullName>IGST</fullName>
+                <default>false</default>
+                <label>IGST</label>
+            </value>
+            <value>
+                <fullName>CGST</fullName>
+                <default>false</default>
+                <label>CGST</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

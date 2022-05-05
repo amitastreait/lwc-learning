@@ -9,6 +9,13 @@
 		<name>ApexClass</name>
 	</types>
 	<types>
+		<members>InvoiceLineItem__c</members>
+		<members>Invoice__c</members>
+		<members>Payment__c</members>
+		<members>Refund__c</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
 		<members>captureSignature</members>
 		<members>errorPanel</members>
 		<members>invoiceAddNewInvoice</members>
